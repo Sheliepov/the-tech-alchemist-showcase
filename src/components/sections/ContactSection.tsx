@@ -65,7 +65,7 @@ const ContactSection = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="bg-secondary/50"
+                      className="bg-secondary/50 outline-none"
                     />
                   </div>
                   
@@ -112,7 +112,7 @@ const ContactSection = () => {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    className="min-h-[120px] bg-secondary/50"
+                    className="min-h-[120px] bg-secondary/50 outline-none"
                   />
                 </div>
                 
@@ -146,8 +146,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">Email</h4>
-                    <a href="mailto:contact@techalchemist.dev" className="text-primary hover:underline">
-                      contact@techalchemist.dev
+                    <a href="mailto:artemsheliepov@gmail.com" className="text-primary hover:underline">
+                      artemsheliepov@gmail.com
                     </a>
                   </div>
                 </li>
@@ -162,8 +162,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">LinkedIn</h4>
-                    <a href="#" className="text-primary hover:underline">
-                      linkedin.com/in/techalchemist
+                    <a href="https://www.linkedin.com/in/artem-sheliepov-916a69361/" className="text-primary hover:underline">
+                      Artem Sheliepov
                     </a>
                   </div>
                 </li>
@@ -176,8 +176,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-medium">GitHub</h4>
-                    <a href="#" className="text-primary hover:underline">
-                      github.com/techalchemist
+                    <a href="https://github.com/Sheliepov" className="text-primary hover:underline">
+                      https://github.com/Sheliepov
                     </a>
                   </div>
                 </li>

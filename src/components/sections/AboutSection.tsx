@@ -13,7 +13,7 @@ const AboutSection = () => {
     { 
       category: "Backend", 
       items: ["Node.js", "Express", "Python", "Django", "PostgreSQL", "MongoDB"],
-      color: "tech-backend"
+      color: "tech-frontend"
     },
     { 
       category: "Blockchain", 
@@ -23,7 +23,7 @@ const AboutSection = () => {
     { 
       category: "AI/ML", 
       items: ["TensorFlow", "PyTorch", "LangChain", "LLM APIs", "Computer Vision"],
-      color: "tech-ai"
+      color: "tech-blockchain"
     }
   ];
 
@@ -32,7 +32,7 @@ const AboutSection = () => {
       <div className="section-container">
         <h2 className="section-title text-center">About Me</h2>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left side: Bio */}
           <div className="space-y-6 animate-fade-in">
             <h3 className="text-2xl font-semibold">My Journey</h3>
@@ -71,24 +71,6 @@ const AboutSection = () => {
                 </Card>
               ))}
             </div>
-            
-            {/* Testimonial */}
-            <Card className="mt-8 bg-glass border-none shadow-lg">
-              <CardContent className="p-6">
-                <blockquote className="italic text-muted-foreground">
-                  "One of the most versatile developers I've worked with. Their expertise across full-stack, blockchain, and AI technologies enabled our team to deliver an innovative product ahead of schedule."
-                </blockquote>
-                <div className="mt-4 flex items-center">
-                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center mr-3">
-                    <span className="text-primary font-semibold">JD</span>
-                  </div>
-                  <div>
-                    <p className="font-medium">Jane Doe</p>
-                    <p className="text-sm text-muted-foreground">CTO, Tech Innovations Inc.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>
