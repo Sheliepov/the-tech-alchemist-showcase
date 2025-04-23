@@ -2,14 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon } from "lucide-react";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "light"
-  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,17 +17,6 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  // Theme effect
-  useEffect(() => {
-    document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((t) => (t === "dark" ? "light" : "dark"));
-  };
 
   const navItems = [
     { name: "Home", href: "#home" },
@@ -80,13 +65,6 @@ const Header = () => {
           <Button variant="default" size="sm">
             Resume
           </Button>
-          <button
-            className="ml-3 border border-input rounded-full p-1.5 bg-card hover:bg-secondary transition-colors"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-          >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
         </nav>
         {/* Mobile Menu Toggle */}
         <button
@@ -124,13 +102,6 @@ const Header = () => {
             <Button variant="default" size="sm" className="w-full">
               Resume
             </Button>
-            <button
-              className="mt-3 border border-input rounded-full p-1.5 bg-card hover:bg-secondary transition-colors w-fit self-end"
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
           </div>
         </nav>
       )}
