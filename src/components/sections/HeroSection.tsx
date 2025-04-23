@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import ProfilePhoto from "@/assets/profile.png"
@@ -11,8 +10,8 @@ const HeroSection = () => {
     >
       {/* Background Elements */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-tech-frontend/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-tech-blockchain/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-tech-frontend/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-tech-blockchain/20 rounded-full blur-3xl animate-pulse"></div>
       </div>
 
       <div className="container">

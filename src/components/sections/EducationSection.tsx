@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -23,10 +22,14 @@ const EducationSection = () => {
   return (
     <section id="education" className="py-24">
       <div className="section-container">
-        <h2 className="section-title text-center">Education</h2>
+        <h2 className="section-title text-center animate-fade-in">Education</h2>
         <div className="mt-12 space-y-12">
-          {educationList.map((edu) => (
-            <Card key={edu.id} className="border-l-4 border-l-primary animate-fade-in">
+          {educationList.map((edu, index) => (
+            <Card 
+              key={edu.id} 
+              className="border-l-4 border-l-primary animate-fade-in"
+              style={{ animationDelay: `${index * 200}ms` }}
+            >
               <CardHeader className="pb-3">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                   <CardTitle className="text-xl md:text-2xl">{edu.degree}</CardTitle>
@@ -58,4 +61,3 @@ const EducationSection = () => {
 };
 
 export default EducationSection;
-

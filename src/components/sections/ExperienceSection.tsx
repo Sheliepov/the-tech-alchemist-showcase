@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -51,11 +50,14 @@ const ExperienceSection = () => {
   return (
     <section id="experience" className="py-24">
       <div className="section-container">
-        <h2 className="section-title text-center">Professional Experience</h2>
-        
+        <h2 className="section-title text-center animate-fade-in">Professional Experience</h2>
         <div className="mt-12 space-y-12">
-          {experiences.map((experience) => (
-            <Card key={experience.id} className="border-l-4 border-l-primary animate-fade-in">
+          {experiences.map((experience, index) => (
+            <Card 
+              key={experience.id} 
+              className="border-l-4 border-l-primary animate-fade-in"
+              style={{ animationDelay: `${index * 200}ms` }}
+            >
               <CardHeader className="pb-3">
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                   <CardTitle className="text-xl md:text-2xl">
@@ -95,7 +97,7 @@ const ExperienceSection = () => {
           ))}
         </div>
         
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center animate-fade-in" style={{ animationDelay: '800ms' }}>
           <Button size="lg" className="rounded-full">
             Download Full Resume
           </Button>
