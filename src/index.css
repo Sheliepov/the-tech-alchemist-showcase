@@ -31,8 +31,9 @@
 @layer base {
   * {
     @apply border-border;
+    scroll-behavior: smooth;
   }
-  
+
   html {
     @apply scroll-smooth;
   }

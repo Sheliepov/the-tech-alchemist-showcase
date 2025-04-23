@@ -1,8 +1,8 @@
-
 import React from "react";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
+import { TechIcon } from "../TechIcon";
 
 const SkillsSection = () => {
   const skillCategories = [
@@ -52,6 +52,13 @@ const SkillsSection = () => {
     }
   ];
 
+  const techTools = [
+    "Docker", "Kubernetes", "AWS", "Firebase", "CI/CD", "Jest", 
+    "WebSockets", "Redis", "Microservices", "PWAs", "WebAssembly", 
+    "OAuth", "IPFS", "ThirdWeb", "LangChain", "OpenAI API",
+    "Three.js", "WebGL", "Netlify", "Vercel", "Git", "GitHub Actions"
+  ];
+
   return (
     <section id="skills" className="py-24 bg-secondary/30">
       <div className="section-container">
@@ -90,20 +97,15 @@ const SkillsSection = () => {
         
         {/* Additional Technologies */}
         <div className="mt-16">
-          <h3 className="text-2xl font-bold mb-6 text-center">Additional Technologies & Tools</h3>
-          
+          <h3 className="text-2xl font-bold mb-6 text-center">Additional Technologies &amp; Tools</h3>
           <div className="flex flex-wrap justify-center gap-4">
-            {[
-              "Docker", "Kubernetes", "AWS", "Firebase", "CI/CD", "Jest", 
-              "WebSockets", "Redis", "Microservices", "PWAs", "WebAssembly", 
-              "OAuth", "IPFS", "ThirdWeb", "LangChain", "OpenAI API",
-              "Three.js", "WebGL", "Netlify", "Vercel", "Git", "GitHub Actions"
-            ].map((tech) => (
-              <div 
-                key={tech} 
-                className="bg-secondary px-4 py-2 rounded-full text-sm hover:bg-primary hover:text-primary-foreground transition-colors duration-200 cursor-default"
+            {techTools.map((tech) => (
+              <div
+                key={tech}
+                className="bg-secondary px-4 py-2 rounded-full text-sm flex items-center gap-2 hover:bg-primary hover:text-primary-foreground transition-colors duration-200 cursor-default"
               >
-                {tech}
+                <TechIcon name={tech} />
+                <span>{tech}</span>
               </div>
             ))}
           </div>
