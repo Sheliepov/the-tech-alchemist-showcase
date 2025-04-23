@@ -16,9 +16,8 @@ const HeroSection = () => {
 
       <div className="container">
         <div className="flex flex-col lg:flex-row items-center gap-12">
-
           {/* Text Content */}
-          <div className="flex-1 text-center lg:text-left animate-fade-in">
+          <div className="flex-1 text-center lg:text-left hero-content">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               <span className="text-gradient">Senior Full Stack</span>
               <span className="block mt-2">Blockchain & AI Developer</span>
@@ -42,7 +41,7 @@ const HeroSection = () => {
           </div>
 
           {/* Profile Image */}
-          <div className="flex-1 flex justify-center lg:justify-end animate-scale-in">
+          <div className="flex-1 flex justify-center lg:justify-end hero-image">
             <div className="relative">
               <div className="w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-primary/30 bg-glass">
                 {/* Use placeholder for now - replace with actual image */}
