@@ -12,8 +12,8 @@ const SkillsSection = () => {
       skills: [
         { name: "React/Next.js", level: 95 },
         { name: "TypeScript", level: 90 },
-        { name: "Tailwind CSS", level: 85 },
-        { name: "Redux/State Management", level: 80 },
+        { name: "Tailwind CSS", level: 95 },
+        { name: "Redux/State Management", level: 90 },
         { name: "Responsive Design", level: 95 },
       ]
     },
@@ -22,9 +22,9 @@ const SkillsSection = () => {
       color: "tech-backend",
       skills: [
         { name: "Node.js/Express", level: 90 },
-        { name: "Python/Django", level: 85 },
+        { name: "Python/Django", level: 90 },
         { name: "RESTful APIs", level: 95 },
-        { name: "GraphQL", level: 75 },
+        { name: "GraphQL", level: 85 },
         { name: "Databases (SQL/NoSQL)", level: 85 },
       ]
     },
@@ -43,11 +43,11 @@ const SkillsSection = () => {
       name: "AI/ML Development",
       color: "tech-ai",
       skills: [
-        { name: "Machine Learning Algorithms", level: 80 },
-        { name: "TensorFlow/PyTorch", level: 85 },
-        { name: "Natural Language Processing", level: 75 },
-        { name: "LLM Integration", level: 80 },
-        { name: "Computer Vision", level: 70 },
+        { name: "Machine Learning Algorithms", level: 90 },
+        { name: "TensorFlow/PyTorch", level: 90 },
+        { name: "Natural Language Processing", level: 85 },
+        { name: "LLM Integration", level: 95 },
+        { name: "Computer Vision", level: 85 },
       ]
     }
   ];

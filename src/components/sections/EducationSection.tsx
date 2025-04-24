@@ -6,9 +6,9 @@ import { Badge } from "@/components/ui/badge";
 const educationList = [
   {
     id: 1,
-    degree: "M.Sc. in Computer Science",
-    institution: "National Technical University of Ukraine 'Igor Sikorsky Kyiv Polytechnic Institute'",
-    period: "2012 - 2016",
+    degree: "BCompSc, Bachelor of Computer Science",
+    institution: "National Technical University of Ukraine 'Odessa National Polytechnic University'",
+    period: "2011 - 2015",
     description:
       "Master's degree focused on software engineering, distributed systems, and artificial intelligence. Graduated with distinction.",
     achievements: [
@@ -16,19 +16,7 @@ const educationList = [
       "Developed blockchain-based academic record prototype",
       "Completed thesis on distributed neural networks",
     ],
-  },
-  {
-    id: 2,
-    degree: "B.Sc. in Applied Mathematics",
-    institution: "National Technical University of Ukraine 'Igor Sikorsky Kyiv Polytechnic Institute'",
-    period: "2008 - 2012",
-    description:
-      "Bachelor's degree with major in applied mathematics and computer science.",
-    achievements: [
-      "Dean's list every year",
-      "Founded student programming club",
-    ],
-  },
+  }
 ];
 
 const EducationSection = () => {
