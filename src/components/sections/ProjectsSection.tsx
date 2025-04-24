@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ProjectsSection = () => {
   const [activeTab, setActiveTab] = useState("all");
-  
+
   const projects = [
     {
       id: 1,
@@ -38,9 +38,9 @@ const ProjectsSection = () => {
       techStack: ["Node.js", "React", "MongoDB", "Redis", "Stripe API"],
       role: "Full Stack Developer",
       category: "fullstack",
-      image: "/placeholder.svg",
-      demoLink: "#",
-      sourceLink: "#"
+      image: "/projects/eCommerce.png",
+      demoLink: "https://e-commer-website-three.vercel.app/",
+      sourceLink: "https://github.com/Sheliepov/eCommer-website"
     },
     {
       id: 4,
@@ -76,13 +76,13 @@ const ProjectsSection = () => {
       sourceLink: "#"
     }
   ];
-  
-  const filteredProjects = activeTab === "all" 
-    ? projects 
+
+  const filteredProjects = activeTab === "all"
+    ? projects
     : projects.filter(project => project.category === activeTab);
-    
+
   const getCategoryColor = (category: string) => {
-    switch(category) {
+    switch (category) {
       case "fullstack": return "tech-frontend";
       case "blockchain": return "tech-blockchain";
       case "ai": return "tech-ai";
@@ -94,33 +94,33 @@ const ProjectsSection = () => {
     <section id="projects" className="py-24">
       <div className="section-container">
         <h2 className="section-title text-center">Featured Projects</h2>
-        
+
         <Tabs defaultValue="all" className="w-full mb-12">
           <div className="flex justify-center">
             <TabsList className="bg-secondary">
-              <TabsTrigger 
-                value="all" 
+              <TabsTrigger
+                value="all"
                 onClick={() => setActiveTab("all")}
                 className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
               >
                 All Projects
               </TabsTrigger>
-              <TabsTrigger 
-                value="fullstack" 
+              <TabsTrigger
+                value="fullstack"
                 onClick={() => setActiveTab("fullstack")}
                 className="data-[state=active]:bg-tech-frontend data-[state=active]:text-primary-foreground"
               >
                 Full Stack
               </TabsTrigger>
-              <TabsTrigger 
-                value="blockchain" 
+              <TabsTrigger
+                value="blockchain"
                 onClick={() => setActiveTab("blockchain")}
                 className="data-[state=active]:bg-tech-blockchain data-[state=active]:text-primary-foreground"
               >
                 Blockchain
               </TabsTrigger>
-              <TabsTrigger 
-                value="ai" 
+              <TabsTrigger
+                value="ai"
                 onClick={() => setActiveTab("ai")}
                 className="data-[state=active]:bg-tech-ai data-[state=active]:text-primary-foreground"
               >
@@ -128,7 +128,7 @@ const ProjectsSection = () => {
               </TabsTrigger>
             </TabsList>
           </div>
-          
+
           <TabsContent value="all" className="mt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project) => (
@@ -136,7 +136,7 @@ const ProjectsSection = () => {
               ))}
             </div>
           </TabsContent>
-          
+
           <TabsContent value="fullstack" className="mt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project) => (
@@ -144,7 +144,7 @@ const ProjectsSection = () => {
               ))}
             </div>
           </TabsContent>
-          
+
           <TabsContent value="blockchain" className="mt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project) => (
@@ -152,7 +152,7 @@ const ProjectsSection = () => {
               ))}
             </div>
           </TabsContent>
-          
+
           <TabsContent value="ai" className="mt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project) => (
@@ -190,20 +190,20 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <Card className="overflow-hidden border border-border/50 bg-secondary/30 hover:border-primary/50 transition-all duration-300 h-full flex flex-col animate-scale-in">
       <div className="aspect-video relative overflow-hidden">
-        <img 
-          src={project.image} 
-          alt={project.name} 
+        <img
+          src={project.image}
+          alt={project.name}
           className="w-full h-full object-cover object-center"
         />
         <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-medium bg-${categoryColor} text-white`}>
           {project.category.charAt(0).toUpperCase() + project.category.slice(1)}
         </div>
       </div>
-      
+
       <CardHeader>
         <CardTitle>{project.name}</CardTitle>
       </CardHeader>
-      
+
       <CardContent className="flex-grow">
         <p className="text-muted-foreground mb-4">
           {project.description}
@@ -223,7 +223,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
         </div>
       </CardContent>
-      
+
       <CardFooter className="pt-0 flex gap-2">
         <Button variant="default" size="sm" className="w-full">
           Live Demo

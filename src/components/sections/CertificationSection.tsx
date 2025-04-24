@@ -7,24 +7,38 @@ import { Award } from "lucide-react";
 const certifications = [
   {
     id: 1,
-    title: "Problem Solving (Basic)",
+    title: "Problem Solving (Intermediate)",
     provider: "HackerRank",
-    issued: "Jan 2023",
-    link: "https://www.hackerrank.com/certificates/example1"
+    issued: "Apr 2025",
+    link: "https://www.hackerrank.com/certificates/2e48e5aea121"
   },
   {
     id: 2,
-    title: "JavaScript (Intermediate)",
+    title: "Python (Basic)",
     provider: "HackerRank",
-    issued: "Feb 2023",
-    link: "https://www.hackerrank.com/certificates/example2"
+    issued: "Apr 2025",
+    link: "https://www.hackerrank.com/certificates/554f3488281f"
   },
   {
     id: 3,
-    title: "Python (Basic)",
+    title: "Software Engineer",
     provider: "HackerRank",
-    issued: "Mar 2023",
-    link: "https://www.hackerrank.com/certificates/example3"
+    issued: "Apr 2025",
+    link: "https://www.hackerrank.com/certificates/4abc0e07ad21"
+  },
+  {
+    id: 4,
+    title: "Go (Intermediate)",
+    provider: "HackerRank",
+    issued: "Apr 2025",
+    link: "https://www.hackerrank.com/certificates/c16d2ea53af5"
+  },
+  {
+    id: 5,
+    title: "JavaScript (Intermediate)",
+    provider: "HackerRank",
+    issued: "Apr 2025",
+    link: "https://www.hackerrank.com/certificates/b977abdb30f9"
   },
 ];
 
