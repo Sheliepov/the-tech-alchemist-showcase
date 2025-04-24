@@ -13,20 +13,21 @@ import CertificationSection from "@/components/sections/CertificationSection";
 import { useGsapAnimations } from "@/hooks/useGsapAnimations";
 
 const Index = () => {
+  // Initialize GSAP animations
   useGsapAnimations();
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <HeroSection />
+        <div id="home"><HeroSection /></div>
         <div className="about-section"><AboutSection /></div>
-        <div className="education-section"><EducationSection /></div>
-        <div className="projects-section"><ProjectsSection /></div>
-        <div className="skills-section"><SkillsSection /></div>
-        <div className="experience-section"><ExperienceSection /></div>
-        <div className="certification-section"><CertificationSection /></div>
-        <div className="contact-section"><ContactSection /></div>
+        <div id="education" className="education-section"><EducationSection /></div>
+        <div id="projects" className="projects-section"><ProjectsSection /></div>
+        <div id="skills" className="skills-section"><SkillsSection /></div>
+        <div id="experience" className="experience-section"><ExperienceSection /></div>
+        <div id="certifications" className="certification-section"><CertificationSection /></div>
+        <div id="contact" className="contact-section"><ContactSection /></div>
       </main>
       <Footer />
     </div>

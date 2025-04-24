@@ -25,6 +25,12 @@
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
     --radius: 0.75rem;
+    
+    /* Tech stack colors */
+    --tech-frontend: 217 91% 60%;
+    --tech-backend: 142 71% 45%;
+    --tech-blockchain: 280 87% 65%;
+    --tech-ai: 326 81% 60%;
   }
 
   .dark {
@@ -53,15 +59,15 @@
 @layer base {
   * {
     @apply border-border;
-    scroll-behavior: smooth;
   }
 
   html {
-    @apply scroll-smooth;
+    @apply scroll-smooth scroll-pt-16;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased overflow-x-hidden;
     font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
   }
 }
@@ -101,5 +107,18 @@
   
   .tech-tag-ai {
     @apply bg-tech-ai/20 text-tech-ai border border-tech-ai/40;
+  }
+  
+  /* Animation utility classes */
+  .animate-card {
+    @apply opacity-100;
+  }
+  
+  .animate-fade-in {
+    @apply transition-opacity duration-700;
+  }
+  
+  .animate-scale-in {
+    @apply transition-all duration-500;
   }
 }

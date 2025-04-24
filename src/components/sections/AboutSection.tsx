@@ -13,7 +13,7 @@ const AboutSection = () => {
     { 
       category: "Backend", 
       items: ["Node.js", "Express", "Python", "Django", "PostgreSQL", "MongoDB"],
-      color: "tech-frontend"
+      color: "tech-backend"
     },
     { 
       category: "Blockchain", 
@@ -23,7 +23,7 @@ const AboutSection = () => {
     { 
       category: "AI/ML", 
       items: ["TensorFlow", "PyTorch", "LangChain", "LLM APIs", "Computer Vision"],
-      color: "tech-blockchain"
+      color: "tech-ai"
     }
   ];
 
@@ -34,7 +34,7 @@ const AboutSection = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left side: Bio */}
-          <div className="space-y-6 animate-fade-in">
+          <div className="space-y-6 animate-card">
             <h3 className="text-2xl font-semibold">My Journey</h3>
             <p className="text-muted-foreground">
               I started my development journey 8 years ago with a passion for creating elegant solutions to complex problems. With a background in computer science and continuous learning, I've evolved from a frontend enthusiast to a versatile full-stack developer with specialized expertise in blockchain and AI technologies.
@@ -53,16 +53,16 @@ const AboutSection = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {skills.map((skillGroup) => (
-                <Card key={skillGroup.category} className="bg-secondary border-none shadow-lg animate-scale-in">
+                <Card key={skillGroup.category} className="bg-secondary border-none shadow-lg animate-card">
                   <CardContent className="p-6">
-                    <h4 className={`text-xl font-semibold mb-4 text-${skillGroup.color}`}>
+                    <h4 className="text-xl font-semibold mb-4 text-primary">
                       {skillGroup.category}
                     </h4>
                     <Separator className="mb-4" />
                     <ul className="space-y-2">
                       {skillGroup.items.map((skill) => (
                         <li key={skill} className="flex items-center gap-2">
-                          <div className={`w-2 h-2 rounded-full bg-${skillGroup.color}`}></div>
+                          <div className="w-2 h-2 rounded-full bg-primary"></div>
                           <span>{skill}</span>
                         </li>
                       ))}

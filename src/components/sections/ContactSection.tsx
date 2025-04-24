@@ -50,7 +50,7 @@ const ContactSection = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
           {/* Contact Form */}
-          <Card className="bg-card border-none shadow-lg animate-scale-in">
+          <Card className="bg-card border-none shadow-lg animate-card">
             <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -129,7 +129,7 @@ const ContactSection = () => {
           </Card>
           
           {/* Contact Info */}
-          <div className="space-y-8 animate-fade-in">
+          <div className="space-y-8 animate-card">
             <div>
               <h3 className="text-2xl font-semibold mb-4">Contact Information</h3>
               <p className="text-muted-foreground mb-6">

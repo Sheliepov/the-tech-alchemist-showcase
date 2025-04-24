@@ -22,6 +22,7 @@ const Header = () => {
   const navItems = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
+    { name: "Education", href: "#education" },
     { name: "Projects", href: "#projects" },
     { name: "Skills", href: "#skills" },
     { name: "Experience", href: "#experience" },
@@ -29,10 +30,10 @@ const Header = () => {
     { name: "Contact", href: "#contact" }
   ];
 
-  // Smooth scroll for desktop nav links
+  // Smooth scroll for nav links
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
     if (href.startsWith("#")) {
-      e.preventDefault();
       const id = href.replace("#", "");
       const el = document.getElementById(id);
       if (el) {

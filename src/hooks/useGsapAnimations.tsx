@@ -35,35 +35,41 @@ export const useGsapAnimations = () => {
     ];
 
     sections.forEach((section) => {
-      gsap.from(section, {
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-        },
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: 'power3.out',
-      });
+      // Make sure section exists before animating
+      if (document.querySelector(section)) {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
+          },
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          ease: 'power3.out',
+        });
+      }
     });
 
-    // Card stagger animations
+    // Card stagger animations for each section
     sections.forEach((section) => {
-      gsap.from(`${section} .animate-card`, {
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-        },
-        opacity: 0,
-        y: 30,
-        stagger: 0.2,
-        duration: 0.8,
-        ease: 'power3.out',
-      });
+      const cards = document.querySelectorAll(`${section} .animate-card`);
+      if (cards.length > 0) {
+        gsap.from(cards, {
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
+          },
+          opacity: 0,
+          y: 30,
+          stagger: 0.2,
+          duration: 0.8,
+          ease: 'power3.out',
+        });
+      }
     });
 
     return () => {
