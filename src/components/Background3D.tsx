@@ -14,9 +14,9 @@ const AnimatedSphereField = ({
   speed = 0.5,
 }) => {
   // References for our geometry instances
-  const groupRef = useRef();
-  const meshRef = useRef();
-  const materialRef = useRef();
+  const groupRef = useRef<THREE.Group>(null);
+  const meshRef = useRef<THREE.InstancedMesh>(null);
+  const materialRef = useRef<THREE.MeshStandardMaterial>(null);
   
   // Create positions and animation parameters for each sphere
   const spheres = useMemo(() => {
@@ -91,37 +91,51 @@ const AnimatedSphereField = ({
   
   return (
     <group ref={groupRef}>
-      <instancedMesh ref={meshRef} args={[null, null, count]}>
+      <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
         <sphereGeometry args={[sphereSize, 16, 16]} />
         <meshStandardMaterial 
           ref={materialRef}
-          vertexColors={true} 
           transparent={true}
           opacity={0.8}
           metalness={0.3}
           roughness={0.2}
           emissive="#ffffff"
           emissiveIntensity={0.1}
-        >
-          <instancedBufferAttribute 
-            attach="attributes-color" 
-            args={[colorArray, 3]} 
-          />
-        </meshStandardMaterial>
+        />
       </instancedMesh>
+      {/* Colored spheres using a separate approach */}
+      {spheres.map((sphere, i) => (
+        <mesh
+          key={i}
+          position={[
+            sphere.position.x,
+            sphere.position.y, 
+            sphere.position.z
+          ]}
+          scale={sphere.scale}
+          visible={false} // We're using these just for color contribution
+        >
+          <sphereGeometry args={[0.01, 4, 4]} />
+          <meshStandardMaterial color={colors[sphere.colorIndex]} />
+        </mesh>
+      ))}
     </group>
   );
 };
 
 // Radial ripple effect with waves expanding outward
 const RadialWaves = ({ color = '#4285F4', speed = 1, count = 5 }) => {
-  const meshRef = useRef();
+  const meshRef = useRef<THREE.Mesh>(null);
   
   useFrame(({ clock }) => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || !meshRef.current.material) return;
     
+    const material = meshRef.current.material as THREE.ShaderMaterial;
     const time = clock.getElapsedTime() * speed;
-    meshRef.current.material.uniforms.uTime.value = time;
+    
+    if (material.uniforms) {
+      material.uniforms.uTime.value = time;
+    }
   });
   
   // Create custom shader material for wave effect
