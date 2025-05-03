@@ -76,6 +76,39 @@ const FloatingCube = ({ color }: { color: string }) => {
   );
 };
 
+// New floating torus component with smooth animation
+const FloatingTorus = ({ color }: { color: string }) => {
+  const mesh = useRef<THREE.Mesh>(null);
+
+  useFrame(({ clock }) => {
+    if (!mesh.current) return;
+    
+    const elapsedTime = clock.getElapsedTime();
+    
+    // Create more complex animation for the torus
+    mesh.current.rotation.x = Math.cos(elapsedTime * 0.3) * 0.4;
+    mesh.current.rotation.y = Math.sin(elapsedTime * 0.2) * 0.6;
+    mesh.current.rotation.z = Math.sin(elapsedTime * 0.1) * 0.3;
+    
+    // Add gentle floating motion
+    mesh.current.position.x = Math.sin(elapsedTime * 0.15) * 2;
+    mesh.current.position.y = Math.cos(elapsedTime * 0.2) * 1.5 - 1; // Position below the cube
+    mesh.current.position.z = Math.sin(elapsedTime * 0.1) * 0.5;
+  });
+
+  return (
+    <mesh ref={mesh}>
+      <torusGeometry args={[2, 0.5, 16, 50]} />
+      <meshStandardMaterial 
+        color={color} 
+        wireframe 
+        transparent 
+        opacity={0.3} 
+      />
+    </mesh>
+  );
+};
+
 // Main background component
 const Background3D = () => {
   const { theme } = useTheme();
@@ -89,6 +122,7 @@ const Background3D = () => {
   const isDark = theme === 'dark';
   const particleColor = isDark ? '#4285F4' : '#2563EB';
   const cubeColor = isDark ? '#8e24aa' : '#6D28D9';
+  const torusColor = isDark ? '#F97316' : '#F59E0B'; // Orange color for the torus
   
   return (
     <div className="fixed inset-0 -z-10 opacity-50">
@@ -96,6 +130,7 @@ const Background3D = () => {
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         <FloatingCube color={cubeColor} />
+        <FloatingTorus color={torusColor} />
         <ParticleField count={200} color={particleColor} />
       </Canvas>
     </div>
