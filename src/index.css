@@ -74,7 +74,7 @@
 
 @layer components {
   .bg-glass {
-    @apply backdrop-blur-lg border border-white/20 rounded-xl;
+    @apply backdrop-blur-lg border border-white/20 rounded-xl bg-background/40;
   }
   
   .text-gradient {
@@ -82,7 +82,7 @@
   }
   
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10 bg-background/40 backdrop-blur-sm rounded-lg;
   }
   
   .section-title {
@@ -124,6 +124,6 @@
   
   /* Enhanced card styles to work better with 3D background */
   .card, .section-container {
-    @apply backdrop-blur-sm;
+    @apply backdrop-blur-sm bg-background/70;
   }
 }

@@ -45,7 +45,7 @@ const ParticleField = ({ count = 100, color, speedFactor = 0.15 }: { count?: num
   return (
     <instancedMesh ref={mesh} args={[undefined, undefined, count]}>
       <sphereGeometry args={[0.1, 8, 8]} />
-      <meshStandardMaterial color={color} transparent opacity={0.8} />
+      <meshStandardMaterial color={color} transparent opacity={0.5} />
     </instancedMesh>
   );
 };
@@ -70,7 +70,7 @@ const FloatingCube = ({ color }: { color: string }) => {
         color={color} 
         wireframe 
         transparent 
-        opacity={0.5} 
+        opacity={0.3} 
       />
     </mesh>
   );
@@ -91,12 +91,12 @@ const Background3D = () => {
   const cubeColor = isDark ? '#8e24aa' : '#6D28D9';
   
   return (
-    <div className="fixed inset-0 -z-10 opacity-90">
+    <div className="fixed inset-0 -z-10 opacity-50">
       <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         <FloatingCube color={cubeColor} />
-        <ParticleField count={300} color={particleColor} />
+        <ParticleField count={200} color={particleColor} />
       </Canvas>
     </div>
   );
