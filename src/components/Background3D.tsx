@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTheme } from 'next-themes';
 import { useMount } from '@/hooks/useMount';
+import * as THREE from 'three';
 
 // Floating particles component
 const ParticleField = ({ count = 100, color, speedFactor = 0.15 }: { count?: number; color: string; speedFactor?: number }) => {
