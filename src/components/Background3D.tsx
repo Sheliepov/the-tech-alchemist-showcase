@@ -1,201 +1,178 @@
 
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useTheme } from 'next-themes';
 import { useMount } from '@/hooks/useMount';
 import * as THREE from 'three';
 
-// Enhanced connected particle system with more dynamic movement and interactive nodes
-const ConnectedParticles = ({ 
-  count = 100, 
-  color, 
-  connectionDistance = 2.5,
+// A mesmerizing floating sphere field with dynamic wave ripples
+const AnimatedSphereField = ({
+  count = 60,
+  radius = 8,
+  sphereSize = 0.2,
+  colors = ['#4285F4', '#F97316', '#8B5CF6'],
   speed = 0.5,
-  size = 0.15
-}: { 
-  count?: number; 
-  color: string; 
-  connectionDistance?: number;
-  speed?: number;
-  size?: number;
 }) => {
-  // Create particles with random positions
-  const particles = useMemo(() => {
-    return Array.from({ length: count }, () => ({
-      position: new THREE.Vector3(
-        (Math.random() - 0.5) * 15,
-        (Math.random() - 0.5) * 15,
-        (Math.random() - 0.5) * 15
-      ),
-      velocity: new THREE.Vector3(
-        (Math.random() - 0.5) * 0.02 * speed,
-        (Math.random() - 0.5) * 0.02 * speed,
-        (Math.random() - 0.5) * 0.02 * speed
-      ),
-      originalVelocity: new THREE.Vector3(),
-      phase: Math.random() * Math.PI * 2,
-      connections: [] as number[],
-      size: 0.05 + Math.random() * size * 0.3 // Random size variation
-    }));
-  }, [count, speed, size]);
+  // References for our geometry instances
+  const groupRef = useRef();
+  const meshRef = useRef();
+  const materialRef = useRef();
   
-  // Store original velocities for wave motion calculation
-  useMemo(() => {
-    particles.forEach(p => {
-      p.originalVelocity.copy(p.velocity);
+  // Create positions and animation parameters for each sphere
+  const spheres = useMemo(() => {
+    return Array.from({ length: count }, (_, i) => {
+      // Distribute spheres in a spherical pattern
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos((Math.random() * 2) - 1);
+      const distance = Math.random() * radius * 0.7 + (radius * 0.3);
+      
+      return {
+        position: new THREE.Vector3(
+          distance * Math.sin(phi) * Math.cos(theta),
+          distance * Math.sin(phi) * Math.sin(theta),
+          distance * Math.cos(phi)
+        ),
+        scale: Math.random() * 0.8 + 0.6,
+        speed: Math.random() * 0.5 + 0.2,
+        phase: Math.random() * Math.PI * 2,
+        colorIndex: Math.floor(Math.random() * colors.length),
+      };
     });
-  }, [particles]);
+  }, [count, radius, colors]);
 
-  // Refs for the instances mesh and line segments
-  const pointsRef = useRef<THREE.Points>(null);
-  const linesRef = useRef<THREE.LineSegments>(null);
+  // Create dummy objects for instanced mesh
+  const dummyObj = useMemo(() => new THREE.Object3D(), []);
+  const dummyColor = useMemo(() => new THREE.Color(), []);
+  const colorArray = useMemo(() => {
+    const array = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const color = new THREE.Color(colors[spheres[i].colorIndex]);
+      color.toArray(array, i * 3);
+    }
+    return array;
+  }, [count, colors, spheres]);
 
-  // Create the geometry for points
-  const pointsGeometry = useMemo(() => {
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(count * 3);
-    const sizes = new Float32Array(count);
-    
-    particles.forEach((particle, i) => {
-      positions[i * 3] = particle.position.x;
-      positions[i * 3 + 1] = particle.position.y;
-      positions[i * 3 + 2] = particle.position.z;
-      sizes[i] = particle.size;
-    });
-    
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-    return geometry;
-  }, [particles, count]);
-
-  // Update animation each frame
+  // Animation frame update
   useFrame(({ clock }) => {
-    if (!pointsRef.current || !linesRef.current) return;
-
-    const positions = pointsRef.current.geometry.attributes.position.array as Float32Array;
-    const sizes = pointsRef.current.geometry.attributes.size.array as Float32Array;
-    const elapsedTime = clock.getElapsedTime();
+    const time = clock.getElapsedTime();
     
-    // Reset connections
-    particles.forEach(p => p.connections = []);
-    
-    // Update particle positions with complex motion
-    for (let i = 0; i < count; i++) {
-      const particle = particles[i];
-      
-      // Complex wave motion based on 3D sine waves
-      const xWave = Math.sin(elapsedTime * 0.3 + particle.phase) * 0.04 * speed;
-      const yWave = Math.cos(elapsedTime * 0.2 + particle.phase * 1.3) * 0.03 * speed;
-      const zWave = Math.sin(elapsedTime * 0.4 + particle.phase * 0.7) * 0.05 * speed;
-      
-      // Apply wave motion + original velocity
-      particle.position.x += particle.originalVelocity.x + xWave;
-      particle.position.y += particle.originalVelocity.y + yWave;
-      particle.position.z += particle.originalVelocity.z + zWave;
-      
-      // Boundary check with smooth bounce effect
-      const bounds = 7.5;
-      const bounceEasing = 0.95; // Smooth bounce
-      
-      if (Math.abs(particle.position.x) > bounds) {
-        particle.originalVelocity.x *= -bounceEasing;
-        particle.position.x = Math.sign(particle.position.x) * bounds;
-      }
-      
-      if (Math.abs(particle.position.y) > bounds) {
-        particle.originalVelocity.y *= -bounceEasing;
-        particle.position.y = Math.sign(particle.position.y) * bounds;
-      }
-      
-      if (Math.abs(particle.position.z) > bounds) {
-        particle.originalVelocity.z *= -bounceEasing;
-        particle.position.z = Math.sign(particle.position.z) * bounds;
-      }
-      
-      // Pulsating size effect
-      sizes[i] = particle.size * (1 + Math.sin(elapsedTime * 2 + particle.phase) * 0.2);
-      
-      // Update positions array for rendering
-      positions[i * 3] = particle.position.x;
-      positions[i * 3 + 1] = particle.position.y;
-      positions[i * 3 + 2] = particle.position.z;
+    // Rotate the entire group
+    if (groupRef.current) {
+      groupRef.current.rotation.y = time * 0.05;
+      groupRef.current.rotation.z = Math.sin(time * 0.025) * 0.1;
     }
     
-    // Find connections between particles with varying opacity based on distance
-    const linePositions: number[] = [];
-    const lineColors: number[] = [];
-    
-    const colorObj = new THREE.Color(color);
-    
-    for (let i = 0; i < count; i++) {
-      for (let j = i + 1; j < count; j++) {
-        const distance = particles[i].position.distanceTo(particles[j].position);
+    // Update each sphere - pulsing wave effect
+    if (meshRef.current) {
+      spheres.forEach((sphere, i) => {
+        const { position, scale, speed, phase } = sphere;
         
-        if (distance < connectionDistance) {
-          particles[i].connections.push(j);
-          particles[j].connections.push(i);
-          
-          // Connection opacity based on distance
-          const opacity = 1 - (distance / connectionDistance);
-          
-          // Add both points to create a line segment
-          linePositions.push(
-            particles[i].position.x, particles[i].position.y, particles[i].position.z,
-            particles[j].position.x, particles[j].position.y, particles[j].position.z
-          );
-          
-          // Color with opacity
-          lineColors.push(
-            colorObj.r, colorObj.g, colorObj.b, opacity,
-            colorObj.r, colorObj.g, colorObj.b, opacity
-          );
-        }
-      }
+        // Wave ripple effect on y-axis
+        const waveFactor = Math.sin(time * speed + phase) * 0.5;
+        
+        dummyObj.position.set(
+          position.x,
+          position.y + waveFactor,
+          position.z
+        );
+        
+        // Pulse scale with wave
+        const scaleFactor = scale * (1 + Math.sin(time * speed * 0.8 + phase) * 0.2);
+        dummyObj.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        
+        // Apply matrix to instanced mesh
+        dummyObj.updateMatrix();
+        meshRef.current.setMatrixAt(i, dummyObj.matrix);
+      });
+      
+      meshRef.current.instanceMatrix.needsUpdate = true;
     }
-    
-    // Update points geometry
-    pointsRef.current.geometry.attributes.position.needsUpdate = true;
-    pointsRef.current.geometry.attributes.size.needsUpdate = true;
-    
-    // Update lines geometry
-    const lineGeometry = new THREE.BufferGeometry();
-    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-    
-    if (linesRef.current.geometry) {
-      linesRef.current.geometry.dispose();
-    }
-    linesRef.current.geometry = lineGeometry;
   });
+  
+  return (
+    <group ref={groupRef}>
+      <instancedMesh ref={meshRef} args={[null, null, count]}>
+        <sphereGeometry args={[sphereSize, 16, 16]} />
+        <meshStandardMaterial 
+          ref={materialRef}
+          vertexColors={true} 
+          transparent={true}
+          opacity={0.8}
+          metalness={0.3}
+          roughness={0.2}
+          emissive="#ffffff"
+          emissiveIntensity={0.1}
+        >
+          <instancedBufferAttribute 
+            attach="attributes-color" 
+            args={[colorArray, 3]} 
+          />
+        </meshStandardMaterial>
+      </instancedMesh>
+    </group>
+  );
+};
 
-  // Custom shader material for particles with glow effect
-  const pointsMaterial = useMemo(() => {
-    return new THREE.PointsMaterial({
-      color: color,
-      size: size,
+// Radial ripple effect with waves expanding outward
+const RadialWaves = ({ color = '#4285F4', speed = 1, count = 5 }) => {
+  const meshRef = useRef();
+  
+  useFrame(({ clock }) => {
+    if (!meshRef.current) return;
+    
+    const time = clock.getElapsedTime() * speed;
+    meshRef.current.material.uniforms.uTime.value = time;
+  });
+  
+  // Create custom shader material for wave effect
+  const waveMaterial = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color(color) },
+        uCount: { value: count },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        uniform vec3 uColor;
+        uniform float uCount;
+        varying vec2 vUv;
+        
+        void main() {
+          vec2 center = vec2(0.5, 0.5);
+          float dist = distance(vUv, center);
+          
+          // Create multiple waves with different phases
+          float wave = 0.0;
+          for (float i = 0.0; i < 10.0; i++) {
+            if (i >= uCount) break;
+            float phase = i * 0.2;
+            wave += sin((dist * 15.0 - uTime + phase) * 3.1415) * 0.5;
+          }
+          
+          float alpha = smoothstep(0.0, 0.2, dist) * smoothstep(0.8, 0.3, dist) * abs(wave);
+          gl_FragColor = vec4(uColor, alpha * 0.3);
+        }
+      `,
       transparent: true,
-      opacity: 0.8,
-      sizeAttenuation: true,
       blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide,
+      depthWrite: false,
     });
-  }, [color, size]);
-
-  // Line material with transparency
-  const lineMaterial = useMemo(() => {
-    return new THREE.LineBasicMaterial({
-      color: color,
-      transparent: true,
-      opacity: 0.4,
-      blending: THREE.AdditiveBlending,
-    });
-  }, [color]);
+  }, [color, count]);
 
   return (
-    <group>
-      <points ref={pointsRef} geometry={pointsGeometry} material={pointsMaterial} />
-      <lineSegments ref={linesRef} material={lineMaterial}>
-        <bufferGeometry />
-      </lineSegments>
-    </group>
+    <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]}>
+      <planeGeometry args={[20, 20, 32, 32]} />
+      <primitive object={waveMaterial} attach="material" />
+    </mesh>
   );
 };
 
@@ -210,42 +187,37 @@ const Background3D = () => {
   }
 
   const isDark = theme === 'dark';
+  
+  // Theme-specific colors
   const primaryColor = isDark ? '#4285F4' : '#2563EB';
   const secondaryColor = isDark ? '#F97316' : '#F59E0B';
   const accentColor = isDark ? '#8B5CF6' : '#A855F7';
+  const ambientIntensity = isDark ? 0.2 : 0.4;
+  const directionalIntensity = isDark ? 1.0 : 0.8;
   
   return (
-    <div className="fixed inset-0 -z-10 opacity-50">
-      <Canvas camera={{ position: [0, 0, 10], fov: 75 }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
+    <div className="fixed inset-0 -z-10 opacity-60">
+      <Canvas camera={{ position: [0, 0, 12], fov: 60 }} dpr={[1, 2]}>
+        {/* Lights */}
+        <ambientLight intensity={ambientIntensity} />
+        <directionalLight position={[10, 10, 5]} intensity={directionalIntensity} color="#ffffff" />
+        <directionalLight position={[-10, -10, -5]} intensity={directionalIntensity * 0.4} color={accentColor} />
         
-        {/* Primary particle system */}
-        <ConnectedParticles 
-          count={120} 
-          color={primaryColor} 
-          connectionDistance={3.5} 
-          speed={0.4}
-          size={0.15}
+        {/* Main 3D elements */}
+        <AnimatedSphereField 
+          count={80} 
+          colors={[primaryColor, secondaryColor, accentColor]} 
+          radius={10}
+          sphereSize={0.25}
+          speed={0.6}
         />
         
-        {/* Secondary particle system with different parameters */}
-        <ConnectedParticles 
-          count={60} 
-          color={secondaryColor} 
-          connectionDistance={4} 
-          speed={0.3}
-          size={0.2}
-        />
+        {/* Radial wave effects */}
+        <RadialWaves color={primaryColor} speed={0.5} count={3} />
+        <RadialWaves color={accentColor} speed={0.3} count={2} />
         
-        {/* Accent particle system for more complexity */}
-        <ConnectedParticles 
-          count={30} 
-          color={accentColor} 
-          connectionDistance={5} 
-          speed={0.25}
-          size={0.25}
-        />
+        {/* Add subtle fog for depth */}
+        <fog attach="fog" args={[isDark ? '#121212' : '#f8fafc', 8, 25]} />
       </Canvas>
     </div>
   );
