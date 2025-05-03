@@ -74,7 +74,7 @@
 
 @layer components {
   .bg-glass {
-    @apply bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl;
+    @apply backdrop-blur-lg border border-white/20 rounded-xl;
   }
   
   .text-gradient {

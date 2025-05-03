@@ -23,13 +23,13 @@ const Index = () => {
       <Header />
       <main className="flex-grow">
         <div id="home"><HeroSection /></div>
-        <div id="about" className="about-section"><AboutSection /></div>
-        <div id="education" className="education-section"><EducationSection /></div>
-        <div id="projects" className="projects-section"><ProjectsSection /></div>
-        <div id="skills" className="skills-section"><SkillsSection /></div>
-        <div id="experience" className="experience-section"><ExperienceSection /></div>
-        <div id="certifications" className="certification-section"><CertificationSection /></div>
-        <div id="contact" className="contact-section"><ContactSection /></div>
+        <div id="about"><AboutSection /></div>
+        <div id="education"><EducationSection /></div>
+        <div id="projects"><ProjectsSection /></div>
+        <div id="skills"><SkillsSection /></div>
+        <div id="experience"><ExperienceSection /></div>
+        <div id="certifications"><CertificationSection /></div>
+        <div id="contact"><ContactSection /></div>
       </main>
       <Footer />
     </div>
