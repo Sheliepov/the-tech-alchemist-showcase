@@ -82,7 +82,7 @@
   }
   
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10;
   }
   
   .section-title {
@@ -120,5 +120,10 @@
   
   .animate-scale-in {
     @apply transition-all duration-500;
+  }
+  
+  /* Enhanced card styles to work better with 3D background */
+  .card, .section-container {
+    @apply backdrop-blur-sm;
   }
 }

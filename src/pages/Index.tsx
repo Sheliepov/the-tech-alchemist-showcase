@@ -10,6 +10,7 @@ import ExperienceSection from "@/components/sections/ExperienceSection";
 import EducationSection from "@/components/sections/EducationSection";
 import ContactSection from "@/components/sections/ContactSection";
 import CertificationSection from "@/components/sections/CertificationSection";
+import Background3D from "@/components/Background3D";
 import { useGsapAnimations } from "@/hooks/useGsapAnimations";
 
 const Index = () => {
@@ -18,10 +19,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Background3D />
       <Header />
       <main className="flex-grow">
         <div id="home"><HeroSection /></div>
-        <div className="about-section"><AboutSection /></div>
+        <div id="about" className="about-section"><AboutSection /></div>
         <div id="education" className="education-section"><EducationSection /></div>
         <div id="projects" className="projects-section"><ProjectsSection /></div>
         <div id="skills" className="skills-section"><SkillsSection /></div>
